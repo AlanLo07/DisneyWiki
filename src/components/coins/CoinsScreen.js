@@ -29,7 +29,7 @@ class CoinsScreen extends Component {
             loading: false,
             data: [].concat(this.state.data,res.data),
             nextPage: this.state.nextPage + 1,
-            allData: [].concat(this.state.data,res.data)
+            allData: [].concat(this.state.allData,res.data)
         });
     }   
 
