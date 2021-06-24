@@ -1,6 +1,7 @@
 import React from 'react';
-import {View, Text, Pressable, StyleSheet, Image, SectionList} from 'react-native';
+import {View, Text, Pressable, StyleSheet, Image, SectionList, FlatList} from 'react-native';
 import Colors from './../../res/colors';
+import CharacterListProps from './CharacterListProps';
 
 class CoinDetailScreen extends React.Component {
 
@@ -61,9 +62,9 @@ class CoinDetailScreen extends React.Component {
                 <SectionList
                     sections={this.getSections()}
                     keyExtractor={(item,index) => index}
-                    renderItem={({item}) => 
+                    renderItem={({section}) => 
                     <View style={styles.secctionItem}>
-                        <Text style={styles.itemText}>{`${item}`} </Text>
+                        <CharacterListProps data={section.data}/>
                     </View>}
                     renderSectionHeader={({section}) => 
                     <View style={styles.sectionHeader}>

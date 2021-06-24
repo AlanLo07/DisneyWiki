@@ -3,12 +3,13 @@ import { Pressable,Text, View, FlatList, StyleSheet, ActivityIndicator } from 'r
 import Http from './../../libs/http';
 import CharacterItem from './CharacterItem';
 import Colors from './../../res/colors';
-import CoinDetailScreen from './CoinDetailScreen';
+import CharacterSearch from './CharacteSearch';
 class CoinsScreen extends Component {
 
     state={ 
         data:[],
         loading:false,
+        allData: [],
         nextPage: 1,
     }
 
@@ -27,7 +28,8 @@ class CoinsScreen extends Component {
         this.setState({
             loading: false,
             data: [].concat(this.state.data,res.data),
-            nextPage: this.state.nextPage + 1
+            nextPage: this.state.nextPage + 1,
+            allData: [].concat(this.state.data,res.data)
         });
     }   
 
@@ -35,11 +37,23 @@ class CoinsScreen extends Component {
         this.getCharacters()
     }
 
+    handleSearch = (query) => {
+        const allData = this.state.allData;
+        const charactersFiltered = allData.filter((data) => {
+            return data.name.toLowerCase().includes(query.toLowerCase())
+        });
+        this.setState({data:charactersFiltered});
+        console.log(charactersFiltered);
+    }
+
     render() {
 
         const { data, nextPage, loading} = this.state;
         return (
             <View style={style.container}>
+                <CharacterSearch 
+                    onChange={this.handleSearch}
+                />
                 { loading ?
                     <ActivityIndicator
                     style={style.loader} 
@@ -59,10 +73,11 @@ class CoinsScreen extends Component {
                 />
                 {
                     this.state.nextPage < 150 ?
-                    <Pressable 
+                    <Pressable
+                    style={style.btn} 
                     onPress={() => this.getCharacters()}
                     >
-                        <Text>More</Text>    
+                        <Text style={style.btnText}>More</Text>    
                     </Pressable>
                     : null  
                 }
@@ -85,7 +100,8 @@ const style = StyleSheet.create({
         padding: 8,
         backgroundColor: "#179926",
         borderRadius: 8,
-        margin: 16
+        margin: 16,
+        alignItems: "center"
     },
     btnText: {
         color: "#fff",
