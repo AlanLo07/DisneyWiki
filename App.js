@@ -47,7 +47,7 @@ function App () {
             }}
         />
         <Tabs.Screen
-            name="Favorites"
+            name="All characters"
             component={FavoriteStack}  
             options= {{
               tabBarIcon: ({size,color}) => (
